@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:strava_flutter/strava.dart';
 
 // This has been adapted from an example in https://github.com/dreampowder/strava_flutter/blob/master/example/lib/main.dart
 // using the strava_flutter package
