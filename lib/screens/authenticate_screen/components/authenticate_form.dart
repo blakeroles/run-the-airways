@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:strava_flutter/strava.dart';
 import 'package:run_the_airways/secret.dart';
 import 'package:run_the_airways/constants.dart';
-
-// This has been adapted from an example in https://github.com/dreampowder/strava_flutter/blob/master/example/lib/main.dart
-// using the strava_flutter package
 
 class AuthenticateForm extends StatefulWidget {
   @override
@@ -17,18 +12,7 @@ class _AuthenticateFormState extends State<AuthenticateForm> {
     authenticate(secret);
   }
 
-  void authenticate(String secret) async {
-    bool isAuthOk = false;
-
-    final strava = Strava(true, secret);
-    final prompt = "auto";
-
-    isAuthOk = await strava.oauth(clientId, scope, secret, prompt);
-
-    if (isAuthOk) {
-      print("Auth OK!");
-    }
-  }
+  void authenticate(String secret) async {}
 
   @override
   Widget build(BuildContext context) {
