@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:run_the_airways/secret.dart';
-import 'package:run_the_airways/constants.dart';
 
 class AuthenticateForm extends StatefulWidget {
   @override
@@ -8,11 +6,11 @@ class AuthenticateForm extends StatefulWidget {
 }
 
 class _AuthenticateFormState extends State<AuthenticateForm> {
-  void stravaAuthenticate() {
-    authenticate(secret);
-  }
+  TextEditingController txtContoller;
 
-  void authenticate(String secret) async {}
+  void stravaAuthenticate() {
+    print("Authenticated!");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +25,7 @@ class _AuthenticateFormState extends State<AuthenticateForm> {
             key: Key('AuthenticationButton'),
             child: Text('Authenticate'),
             onPressed: stravaAuthenticate,
-          )
+          ),
         ],
       ),
     );
