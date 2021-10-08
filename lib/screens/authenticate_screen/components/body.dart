@@ -3,6 +3,7 @@ import 'package:run_the_airways/constants.dart';
 import 'package:run_the_airways/screens/authenticate_screen/components/splash_content_viewer.dart';
 import 'package:run_the_airways/size_config.dart';
 import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
+import 'package:run_the_airways/models/athlete.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -26,8 +27,19 @@ class _BodyState extends State<Body> {
     },
   ];
 
-  void navigateToOverviewScreen() {
-    Navigator.pushNamed(context, OverviewScreen.routeName);
+  void authAndNavToOverviewScreen() {
+    Athlete authAthlete = authenticateWithStrava();
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OverviewScreen(athlete: authAthlete),
+        ));
+  }
+
+  Athlete authenticateWithStrava() {
+    return Athlete("Blake", "http://fakeUrl", "Sydney", "NSW", "Australia",
+        "meters", 1600.0, 3500.0);
   }
 
   @override
@@ -75,7 +87,7 @@ class _BodyState extends State<Body> {
                     ElevatedButton(
                       key: Key('AuthenticationButton'),
                       child: Text('Authenticate with Strava'),
-                      onPressed: navigateToOverviewScreen,
+                      onPressed: authAndNavToOverviewScreen,
                     ),
                     Spacer(),
                   ]),
