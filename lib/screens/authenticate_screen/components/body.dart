@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:run_the_airways/constants.dart';
 import 'package:run_the_airways/screens/authenticate_screen/components/splash_content_viewer.dart';
 import 'package:run_the_airways/size_config.dart';
+import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -25,8 +26,8 @@ class _BodyState extends State<Body> {
     },
   ];
 
-  void navigate() {
-    print("navigating!");
+  void navigateToOverviewScreen() {
+    Navigator.pushNamed(context, OverviewScreen.routeName);
   }
 
   @override
@@ -35,10 +36,11 @@ class _BodyState extends State<Body> {
         child: SizedBox(
             width: double.infinity,
             child: Column(children: <Widget>[
+              Spacer(),
               Text("Run the Airways",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(36),
-                    color: kPrimaryColor,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                   )),
               Expanded(
@@ -72,8 +74,8 @@ class _BodyState extends State<Body> {
                     Spacer(flex: 3),
                     ElevatedButton(
                       key: Key('AuthenticationButton'),
-                      child: Text('Authenticate'),
-                      onPressed: navigate,
+                      child: Text('Authenticate with Strava'),
+                      onPressed: navigateToOverviewScreen,
                     ),
                     Spacer(),
                   ]),
