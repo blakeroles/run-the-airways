@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:run_the_airways/constants.dart';
 import 'package:run_the_airways/screens/authenticate_screen/components/splash_content_viewer.dart';
+import 'package:run_the_airways/screens/man_create_profile_screen/man_create_profile_screen.dart';
 import 'package:run_the_airways/size_config.dart';
 import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
 import 'package:run_the_airways/models/athlete.dart';
@@ -42,13 +43,20 @@ class _BodyState extends State<Body> {
         "meters", 1600.0, 3500.0);
   }
 
+  void manuallyCreateProfile() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ManCreateProfileScreen(),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: SizedBox(
             width: double.infinity,
             child: Column(children: <Widget>[
-              Spacer(),
               Text("Run the Airways",
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(36),
@@ -88,6 +96,16 @@ class _BodyState extends State<Body> {
                       key: Key('AuthenticationButton'),
                       child: Text('Authenticate with Strava'),
                       onPressed: authAndNavToOverviewScreen,
+                    ),
+                    Text("or",
+                        style: TextStyle(
+                          fontSize: getProportionateScreenWidth(16),
+                          color: Colors.black,
+                        )),
+                    ElevatedButton(
+                      key: Key('ManualEntryButton'),
+                      child: Text('Manually create profile'),
+                      onPressed: manuallyCreateProfile,
                     ),
                     Spacer(),
                   ]),
