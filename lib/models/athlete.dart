@@ -8,7 +8,6 @@ class Athlete {
   String measurementPreference;
 
   // Progress information (api provides information in metric)
-  double runYearlyKms;
   double runAllTimeKms;
 
   // Goal information
@@ -18,22 +17,14 @@ class Athlete {
   // double runAllTimeKmsGoal;
 
   // Constructor
-  Athlete(
-      String firstName,
-      String imageUrl,
-      String city,
-      String state,
-      String country,
-      String measurementPref,
-      double runYearlyKms,
-      double runAllTimeKms) {
+  Athlete(String firstName, String imageUrl, String city, String state,
+      String country, String measurementPref, double runAllTimeKms) {
     this.firstName = firstName;
     this.imageUrl = imageUrl;
     this.city = city;
     this.state = state;
     this.country = country;
     this.measurementPreference = measurementPref;
-    this.runYearlyKms = runYearlyKms;
     this.runAllTimeKms = runAllTimeKms;
   }
 
@@ -60,10 +51,6 @@ class Athlete {
 
   String getMeasurementPref() {
     return this.measurementPreference;
-  }
-
-  double getRunYearlyKms() {
-    return this.runYearlyKms;
   }
 
   double getRunAllTimeKms() {
@@ -93,10 +80,6 @@ class Athlete {
 
   void setMeasurementPref(String mp) {
     this.measurementPreference = mp;
-  }
-
-  void setRunYearlyKms(double runyrkms) {
-    this.runYearlyKms = runyrkms;
   }
 
   void setRunAllTimeKms(double runatkms) {

@@ -41,7 +41,7 @@ class _BodyState extends State<Body> {
 
   Athlete authenticateWithStrava() {
     return Athlete("Blake", "http://fakeUrl", "Sydney", "NSW", "Australia",
-        "meters", 1600.0, 3500.0);
+        "meters", 3500.0);
   }
 
   void manuallyCreateProfile() {

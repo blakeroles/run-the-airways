@@ -4,6 +4,8 @@ import 'package:run_the_airways/size_config.dart';
 import 'package:run_the_airways/constants.dart';
 import 'package:run_the_airways/components/form_error.dart';
 import 'package:run_the_airways/components/default_button.dart';
+import 'package:run_the_airways/models/athlete.dart';
+import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
 
 class ProfileForm extends StatefulWidget {
   @override
@@ -87,6 +89,26 @@ class _ProfileFormState extends State<ProfileForm> {
                 press: () {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
+                    String measurementPref;
+                    if (metersChecked) {
+                      measurementPref = "meters";
+                    } else {
+                      measurementPref = "feet";
+                    }
+                    Athlete newAthlete = Athlete(
+                        firstNameField,
+                        "http://fakeUrl",
+                        cityField,
+                        stateField,
+                        countryField,
+                        measurementPref,
+                        0.0);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              OverviewScreen(athlete: newAthlete),
+                        ));
                   }
                 }),
           ],
