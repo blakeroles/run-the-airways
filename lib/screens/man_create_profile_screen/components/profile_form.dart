@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:run_the_airways/components/custom_suffix_item.dart';
 import 'package:run_the_airways/size_config.dart';
 import 'package:run_the_airways/constants.dart';
+import 'package:run_the_airways/components/form_error.dart';
+import 'package:run_the_airways/components/default_button.dart';
 
 class ProfileForm extends StatefulWidget {
   @override
@@ -21,6 +23,9 @@ class _ProfileFormState extends State<ProfileForm> {
   String stateField;
   String countryField;
 
+  bool metersChecked = true;
+  bool feetChecked = false;
+
   final List<String> errors = [];
 
   @override
@@ -35,7 +40,55 @@ class _ProfileFormState extends State<ProfileForm> {
             SizedBox(height: getProportionateScreenHeight(15)),
             buildStateFormField(),
             SizedBox(height: getProportionateScreenHeight(15)),
-            buildCountryFormField()
+            buildCountryFormField(),
+            SizedBox(height: getProportionateScreenHeight(15)),
+            Row(children: <Widget>[
+              Text("Preferred unit of measurement",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: getProportionateScreenWidth(14.0))),
+            ]),
+            SizedBox(height: getProportionateScreenHeight(15)),
+            Row(children: [
+              SizedBox(width: getProportionateScreenWidth(30)),
+              Checkbox(
+                  value: metersChecked,
+                  activeColor: kPrimaryColor,
+                  onChanged: (value) {
+                    setState(() {
+                      if (value) {
+                        metersChecked = value;
+                        feetChecked = !value;
+                      }
+                    });
+                  }),
+              Text("Meters"),
+              SizedBox(width: getProportionateScreenWidth(100)),
+              Checkbox(
+                value: feetChecked,
+                activeColor: kPrimaryColor,
+                onChanged: (value) {
+                  setState(() {
+                    if (value) {
+                      feetChecked = value;
+                      metersChecked = !value;
+                    }
+                  });
+                },
+              ),
+              Text(
+                "Feet",
+              )
+            ]),
+            SizedBox(height: getProportionateScreenHeight(15)),
+            FormError(errors: errors),
+            DefaultButton(
+                text: "Submit",
+                press: () {
+                  if (_formKey.currentState.validate()) {
+                    _formKey.currentState.save();
+                  }
+                }),
           ],
         ));
   }

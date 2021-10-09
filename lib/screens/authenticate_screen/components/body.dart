@@ -5,6 +5,7 @@ import 'package:run_the_airways/screens/man_create_profile_screen/man_create_pro
 import 'package:run_the_airways/size_config.dart';
 import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
 import 'package:run_the_airways/models/athlete.dart';
+import 'package:run_the_airways/components/default_button.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -92,21 +93,23 @@ class _BodyState extends State<Body> {
                           (index) => buildDot(index: index),
                         )),
                     Spacer(flex: 3),
-                    ElevatedButton(
-                      key: Key('AuthenticationButton'),
-                      child: Text('Authenticate with Strava'),
-                      onPressed: authAndNavToOverviewScreen,
-                    ),
+                    DefaultButton(
+                        text: "Authenticate with Strava",
+                        press: () {
+                          authAndNavToOverviewScreen();
+                        }),
+                    SizedBox(height: getProportionateScreenHeight(20)),
                     Text("or",
                         style: TextStyle(
                           fontSize: getProportionateScreenWidth(16),
                           color: Colors.black,
                         )),
-                    ElevatedButton(
-                      key: Key('ManualEntryButton'),
-                      child: Text('Manually create profile'),
-                      onPressed: manuallyCreateProfile,
-                    ),
+                    SizedBox(height: getProportionateScreenHeight(20)),
+                    DefaultButton(
+                        text: "Manually create profile",
+                        press: () {
+                          manuallyCreateProfile();
+                        }),
                     Spacer(),
                   ]),
                 ),
