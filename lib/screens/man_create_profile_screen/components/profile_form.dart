@@ -32,21 +32,6 @@ class _ProfileFormState extends State<ProfileForm> {
 
   final List<String> errors = [];
 
-  @override
-  void initState() {
-    super.initState();
-    checkIfAthleteStored();
-  }
-
-  void checkIfAthleteStored() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (prefs.getString('athlete_stored') == "yes") {
-        isAthleteStored = true;
-      }
-    });
-  }
-
   void saveAthlete(Athlete athlete) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('athlete_stored', 'yes');
