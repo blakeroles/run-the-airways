@@ -6,6 +6,7 @@ import 'package:run_the_airways/size_config.dart';
 import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
 import 'package:run_the_airways/models/athlete.dart';
 import 'package:run_the_airways/components/default_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   int currentPage = 0;
+  bool isAthleteStored = false;
+  bool inDebugMode = false;
   List<Map<String, String>> splashData = [
     {
       "text": "First splash screen info",
@@ -28,6 +31,44 @@ class _BodyState extends State<Body> {
       "image": "assets/images/placeholder_3.png"
     },
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfAthleteStored();
+  }
+
+  void checkIfAthleteStored() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (prefs.getString('athlete_stored') == "yes") {
+        isAthleteStored = true;
+      }
+    });
+  }
+
+  void clearSharedPrefs() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('athlete_stored', 'no');
+  }
+
+  void login() async {
+    final prefs = await SharedPreferences.getInstance();
+    Athlete getAthlete = Athlete(
+        prefs.getString('athlete_name'),
+        prefs.getString('athlete_image_url'),
+        prefs.getString('athlete_city'),
+        prefs.getString('athlete_state'),
+        prefs.getString('athlete_country'),
+        prefs.getString('athlete_measurement_pref'),
+        prefs.getDouble('athlete_all_time_kms'));
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => OverviewScreen(athlete: getAthlete),
+        ));
+  }
 
   void authAndNavToOverviewScreen() {
     Athlete authAthlete = authenticateWithStrava();
@@ -93,23 +134,54 @@ class _BodyState extends State<Body> {
                           (index) => buildDot(index: index),
                         )),
                     Spacer(flex: 3),
-                    DefaultButton(
-                        text: "Authenticate with Strava",
-                        press: () {
-                          authAndNavToOverviewScreen();
-                        }),
-                    SizedBox(height: getProportionateScreenHeight(20)),
-                    Text("or",
-                        style: TextStyle(
-                          fontSize: getProportionateScreenWidth(16),
-                          color: Colors.black,
-                        )),
-                    SizedBox(height: getProportionateScreenHeight(20)),
-                    DefaultButton(
-                        text: "Manually create profile",
-                        press: () {
-                          manuallyCreateProfile();
-                        }),
+                    Visibility(
+                      visible: !isAthleteStored,
+                      child: DefaultButton(
+                          text: "Authenticate with Strava",
+                          press: () {
+                            authAndNavToOverviewScreen();
+                          }),
+                    ),
+                    Visibility(
+                        visible: !isAthleteStored,
+                        child:
+                            SizedBox(height: getProportionateScreenHeight(20))),
+                    Visibility(
+                      visible: !isAthleteStored,
+                      child: Text("or",
+                          style: TextStyle(
+                            fontSize: getProportionateScreenWidth(16),
+                            color: Colors.black,
+                          )),
+                    ),
+                    Visibility(
+                        visible: !isAthleteStored,
+                        child:
+                            SizedBox(height: getProportionateScreenHeight(20))),
+                    Visibility(
+                      visible: !isAthleteStored,
+                      child: DefaultButton(
+                          text: "Manually create profile",
+                          press: () {
+                            manuallyCreateProfile();
+                          }),
+                    ),
+                    Visibility(
+                      visible: isAthleteStored,
+                      child: DefaultButton(
+                          text: "Login",
+                          press: () {
+                            login();
+                          }),
+                    ),
+                    Visibility(
+                      visible: inDebugMode,
+                      child: DefaultButton(
+                          text: "Clear shared prefs",
+                          press: () {
+                            clearSharedPrefs();
+                          }),
+                    ),
                     Spacer(),
                   ]),
                 ),

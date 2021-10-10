@@ -10,12 +10,6 @@ class Athlete {
   // Progress information (api provides information in metric)
   double runAllTimeKms;
 
-  // Goal information
-  // bool isYearlyGoalSet;
-  // bool isAllTimeGoalSet;
-  // double runYearlyKmsGoal;
-  // double runAllTimeKmsGoal;
-
   // Constructor
   Athlete(String firstName, String imageUrl, String city, String state,
       String country, String measurementPref, double runAllTimeKms) {

@@ -6,6 +6,7 @@ import 'package:run_the_airways/components/form_error.dart';
 import 'package:run_the_airways/components/default_button.dart';
 import 'package:run_the_airways/models/athlete.dart';
 import 'package:run_the_airways/screens/overview_screen/overview_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileForm extends StatefulWidget {
   @override
@@ -27,8 +28,36 @@ class _ProfileFormState extends State<ProfileForm> {
 
   bool metersChecked = true;
   bool feetChecked = false;
+  bool isAthleteStored = false;
 
   final List<String> errors = [];
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfAthleteStored();
+  }
+
+  void checkIfAthleteStored() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      if (prefs.getString('athlete_stored') == "yes") {
+        isAthleteStored = true;
+      }
+    });
+  }
+
+  void saveAthlete(Athlete athlete) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('athlete_stored', 'yes');
+    prefs.setString('athlete_name', athlete.getFirstName());
+    prefs.setString('athlete_image_url', athlete.getImageUrl());
+    prefs.setString('athlete_city', athlete.getCity());
+    prefs.setString('athlete_state', athlete.getState());
+    prefs.setString('athlete_country', athlete.getCountry());
+    prefs.setString('athlete_measurement_pref', athlete.getMeasurementPref());
+    prefs.setDouble('athlete_all_time_kms', athlete.getRunAllTimeKms());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,6 +132,7 @@ class _ProfileFormState extends State<ProfileForm> {
                         countryField,
                         measurementPref,
                         0.0);
+                    saveAthlete(newAthlete);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
